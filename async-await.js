@@ -1,11 +1,14 @@
+let isError = false;
 const getNews = async function () {
   const API_KEY = "f048b1d4c0d946008ae5df5ca954ed23";
   const url =
     "https://newsapi.org/v2/top-headlines?country=tr&apiKey=" + API_KEY;
+
   try {
     const res = await fetch(url);
     if (!res.ok) {
-      throw new Error(`üzgünüm ama birşeyler yolunda gitmedi: ${res.status}`);
+      isError = true;
+      //   throw new Error(`üzgünüm ama birşeyler yolunda gitmedi: ${res.status}`);
     }
     const data = await res.json();
     // console.log(data.articles);
@@ -15,6 +18,11 @@ const getNews = async function () {
 
 const renderNews = (news) => {
   const newList = document.getElementById("news-list");
+  if (isError) {
+    newList.innerHTML += `
+    <h2>Haberler Bulunamadi</h2>
+    `;
+  }
 
   news.forEach((item) => {
     const { title, description, urlToImage, url } = item;

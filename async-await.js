@@ -14,7 +14,21 @@ const getNews = async function () {
 };
 
 const renderNews = (news) => {
-  const newList = document.getElementById("new-list");
+  const newList = document.getElementById("news-list");
+
+  news.forEach((item) => {
+    const { title, description, urlToImage } = item;
+    newList.innerHTML += `
+<div class="card" style="width: 18rem;">
+  <img src="${urlToImage}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">${title}</h5>
+    <p class="card-text">${description}</p>
+    <a href="${url}" target="_blank" class="btn btn-danger">Details</a>
+  </div>
+</div>
+    `;
+  });
 };
 
 window.addEventListener("load", getNews);
